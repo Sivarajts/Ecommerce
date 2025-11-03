@@ -1,0 +1,31 @@
+
+{ "index": { "_index": "products", "_id": 1 } }
+{ "id": 1, "name": "Samsung Galaxy M15", "description": "Smartphone with 50MP camera", "mrpPrice": 12000, "discountedPrice": 9500, "quantity": 15, "category_id": 1 }
+{ "index": { "_index": "products", "_id": 2 } }
+{ "id": 2, "name": "Samsung Earphones", "description": "Wireless earphones with mic", "mrpPrice": 4500, "discountedPrice": 3999, "quantity": 40, "category_id": 1 }
+{ "index": { "_index": "products", "_id": 3 } }
+{ "id": 3, "name": "Motorola Prime", "description": "Mid-range smartphone", "mrpPrice": 7000, "discountedPrice": 5300, "quantity": 30, "category_id": 1 }
+{ "index": { "_index": "products", "_id": 4 } }
+{ "id": 4, "name": "Apple iPhone 14", "description": "Smartphone with A15 chip", "mrpPrice": 80000, "discountedPrice": 74999, "quantity": 25, "category_id": 1 }
+{ "index": { "_index": "products", "_id": 5 } }
+{ "id": 5, "name": "LG Smart TV", "description": "LED TV 43 inch", "mrpPrice": 30000, "discountedPrice": 25999, "quantity": 10, "category_id": 2 }
+{ "index": { "_index": "products", "_id": 6 } }
+{ "id": 6, "name": "Whirlpool Refrigerator", "description": "Energy-efficient double door fridge", "mrpPrice": 24000, "discountedPrice": 21999, "quantity": 18, "category_id": 2 }
+{ "index": { "_index": "products", "_id": 7 } }
+{ "id": 7, "name": "Dell Laptop Inspiron 14", "description": "Laptop with i5 processor", "mrpPrice": 45000, "discountedPrice": 39999, "quantity": 12, "category_id": 3 }
+{ "index": { "_index": "products", "_id": 8 } }
+{ "id": 8, "name": "Lenovo ThinkPad", "description": "Business laptop", "mrpPrice": 52000, "discountedPrice": 48999, "quantity": 8, "category_id": 3 }
+{ "index": { "_index": "products", "_id": 9 } }
+{ "id": 9, "name": "Sony Headphones", "description": "Noise cancelling headphones", "mrpPrice": 3500, "discountedPrice": 2999, "quantity": 60, "category_id": 4 }
+{ "index": { "_index": "products", "_id": 10 } }
+{ "id": 10, "name": "Boat Bluetooth Speaker", "description": "Portable waterproof speaker", "mrpPrice": 2500, "discountedPrice": 1999, "quantity": 75, "category_id": 4 }
+{ "index": { "_index": "products", "_id": 11 } }
+{ "id": 11, "name": "Puma Running Shoes", "description": "Men’s sports shoes", "mrpPrice": 3000, "discountedPrice": 2499, "quantity": 40, "category_id": 5 }
+{ "index": { "_index": "products", "_id": 12 } }
+{ "id": 12, "name": "Nike T-Shirt", "description": "Dry-fit sportswear", "mrpPrice": 1800, "discountedPrice": 1599, "quantity": 50, "category_id": 5 }
+{ "index": { "_index": "products", "_id": 13 } }
+{ "id": 13, "name": "HP Keyboard", "description": "Wireless keyboard", "mrpPrice": 1200, "discountedPrice": 999, "quantity": 35, "category_id": 6 }
+{ "index": { "_index": "products", "_id": 14 } }
+{ "id": 14, "name": "Asus Mouse", "description": "Bluetooth optical mouse", "mrpPrice": 800, "discountedPrice": 699, "quantity": 40, "category_id": 6 }
+{ "index": { "_index": "products", "_id": 15 } }
+{ "id": 15, "name": "Samsung Charger", "description": "25W fast charger", "mrpPrice": 2000, "discountedPrice": 1499, "quantity": 80, "category_id": 1 }
