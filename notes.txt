@@ -5,27 +5,3 @@
 start backend: npm run dev 
 mysql: use ecommdb mysql -u root -p
 USE ecommdb;
-
-
-curl -X GET "localhost:9200" , sudo systemctl start elasticsearch, sudo systemctl enable elasticsearch
-
-
-op:dell@dell-Latitude-3520:~/Project/EComm$ curl -X GET "localhost:9200"
-{
-  "name" : "dell-latitude-3520",
-  "cluster_name" : "ecomm-cluster",
-  "cluster_uuid" : "WJWUj3T9Qa2uSRyGooH1YA",
-  "version" : {
-    "number" : "8.19.6",
-    "build_flavor" : "default",
-    "build_type" : "deb",
-    "build_hash" : "d2c42d91a1eb9e14b1a37c4d87eb2533ec859e2b",
-    "build_date" : "2025-10-21T22:05:27.062491219Z",
-    "build_snapshot" : false,
-    "lucene_version" : "9.12.2",
-    "minimum_wire_compatibility_version" : "7.17.0",
-    "minimum_index_compatibility_version" : "7.0.0"
-  },
-  "tagline" : "You Know, for Search"
-}
-

@@ -3,20 +3,16 @@ import Navbar from "../components/Navbar.jsx";
 import ProductList from "../components/ProductList.jsx";
 
 export default function ProductsPage() {
-  // --- FIX: qObj is now just a string 'q' ---
-  const [q, setQ] = useState(null); // Was [qObj, setQObj]
+  // qObj: { q: string, fulltext: boolean } — passed from Navbar via App/App-level handler
+  const [qObj, setQObj] = useState(null);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* --- FIX: onSearch now only provides the query string --- */}
-      <Navbar onSearch={(query) => setQ(query)} /> {/* Was (q, fulltext) => setQObj(...) */}
+      <Navbar onSearch={(q, fulltext) => setQObj(q ? { q, fulltext } : null)} />
       <main className="max-w-6xl mx-auto p-6">
-        <h2 className="text-2xl font-bold mb-4">
-          {q ? `Results for "${q}"` : "All Products"}
-        </h2>
-        
-        {/* --- FIX: Pass 'q' string directly to ProductList, not qObj --- */}
-        <ProductList showAll={true} q={q} perPage={12} /> {/* Was qObj={qObj} */}
+        <h2 className="text-2xl font-bold mb-4">All Products</h2>
+        {/* showAll = true -> list all products or the search results */}
+        <ProductList showAll={true} qObj={qObj} perPage={12} />
       </main>
     </div>
   );

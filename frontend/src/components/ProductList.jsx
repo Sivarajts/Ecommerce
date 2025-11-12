@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axiosConfig";
-import Pagination from "./Pagination"; // Assuming you have this component
+import Pagination from "./Pagination";
 
-// --- FIX: Props changed from qObj to q (string) ---
-export default function ProductList({ categoryId, showAll = false, q = null, perPage = 10 }) {
+export default function ProductList({ categoryId, showAll = false, qObj = null, perPage = 10 }) {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false); // Added loading state
-  const [error, setError] = useState(""); // Added error state
 
   const normalizeProduct = (p) => ({
     id: p.id,
@@ -22,58 +19,41 @@ export default function ProductList({ categoryId, showAll = false, q = null, per
   });
 
   const fetchProducts = async (p = 1) => {
-    setLoading(true); // --- ADDED ---
-    setError(""); // --- ADDED ---
     try {
       let endpoint;
-      const params = new URLSearchParams(); // --- FIX: Use params for clean URL
-      params.append("page", p);
-      params.append("perPage", perPage);
-
-      if (q) {
-        // --- THIS IS THE CRITICAL FIX ---
-        // Always use the 'fulltext' (Elasticsearch) endpoint for any search query
-        endpoint = "/products/search/fulltext";
-        params.append("q", q);
+      if (qObj?.q) {
+        // search endpoint (fulltext flag currently handled server-side)
+        endpoint = `/products/search?q=${encodeURIComponent(qObj.q)}&page=${p}&perPage=${perPage}`;
       } else if (showAll) {
-        endpoint = "/products/all"; // Use the correct "all products" route
+        endpoint = `/products?page=${p}&perPage=${perPage}`;
       } else {
         if (!categoryId) {
           setProducts([]);
           setTotalPages(1);
-          setLoading(false); // --- ADDED ---
           return;
         }
-        endpoint = `/products/category/${categoryId}`;
+        endpoint = `/products/category/${categoryId}?page=${p}&perPage=${perPage}`;
       }
 
-      const res = await api.get(`${endpoint}?${params.toString()}`);
+      const res = await api.get(endpoint);
       const dataProducts = res.data.products || [];
       setProducts(dataProducts.map(normalizeProduct));
       setPage(res.data.page || p);
       setTotalPages(res.data.totalPages || 1);
     } catch (err) {
       console.error("fetchProducts error", err);
-      setError("Failed to load products."); // --- ADDED ---
       setProducts([]);
       setTotalPages(1);
-    } finally {
-      setLoading(false); // --- ADDED ---
     }
   };
 
   // fetch whenever key inputs change
   useEffect(() => {
-    setPage(1); // Reset page to 1 on new search
+    setPage(1);
     fetchProducts(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoryId, showAll, q]); // --- FIX: Dependency changed from qObj to q ---
+  }, [categoryId, showAll, qObj]);
 
-  // --- RENDER LOGIC ---
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
-  if (products.length === 0) return <p>No products found.</p>;
-  
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -93,14 +73,12 @@ export default function ProductList({ categoryId, showAll = false, q = null, per
       </div>
 
       <div className="mt-6">
-        {totalPages > 1 && (
-           <Pagination
-             page={page}
-             totalPages={totalPages}
-             onPage={(p) => { setPage(p); fetchProducts(p); }}
-             type={showAll ? "all" : "category"}
-           />
-        )}
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPage={(p) => { setPage(p); fetchProducts(p); }}
+          type={showAll ? "all" : "category"}
+        />
       </div>
     </div>
   );

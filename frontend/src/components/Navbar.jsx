@@ -8,6 +8,7 @@ export default function Navbar({ onSearch }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [query, setQuery] = useState("");
+  const [fulltext, setFulltext] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const timerRef = useRef(null);
@@ -24,10 +25,8 @@ export default function Navbar({ onSearch }) {
 
     timerRef.current = setTimeout(async () => {
       try {
-        // Correctly uses fulltext for suggestions
-        const res = await api.get(
-          `/products/search/fulltext?q=${encodeURIComponent(query)}&page=1&perPage=5`
-        );
+        // use small limit for dropdown
+        const res = await api.get(`/products/search?q=${encodeURIComponent(query)}&page=1&perPage=5`);
         setSuggestions(res.data.products || []);
         setShowSuggestions(true);
       } catch (err) {
@@ -40,13 +39,12 @@ export default function Navbar({ onSearch }) {
     return () => clearTimeout(timerRef.current);
   }, [query]);
 
-  // Simplified runSearch
-  const runSearch = (q = query) => {
+  const runSearch = (q = query, ft = fulltext) => {
     const trimmed = (q || "").trim();
     if (!trimmed) return;
-    
+    // navigate to products page and call parent's onSearch so ProductsPage shows result
     navigate("/products");
-    onSearch?.(trimmed); // Passes a simple string
+    onSearch?.(trimmed, ft);
     setShowSuggestions(false);
   };
 
@@ -61,13 +59,14 @@ export default function Navbar({ onSearch }) {
 
   const onSelectSuggestion = (p) => {
     setQuery(p.name);
-    runSearch(p.name);
+    runSearch(p.name, fulltext);
   };
 
   const clearInput = () => {
     setQuery("");
     setSuggestions([]);
     setShowSuggestions(false);
+    // keep focus
     inputRef.current?.focus();
   };
 
@@ -101,7 +100,7 @@ export default function Navbar({ onSearch }) {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={onKeyDown}
               onFocus={() => { if (suggestions.length) setShowSuggestions(true); }}
-              placeholder="Search products (e.g., 'philips under 1000')"
+              placeholder="Search products..."
               className="w-full border rounded-l-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
             />
             {query && (
@@ -115,6 +114,11 @@ export default function Navbar({ onSearch }) {
             >
               Search
             </button>
+
+            <label className="ml-3 inline-flex items-center text-sm">
+              <input type="checkbox" checked={fulltext} onChange={(e) => setFulltext(e.target.checked)} className="mr-1" />
+              Full-text
+            </label>
           </div>
 
           {/* Suggestions dropdown */}

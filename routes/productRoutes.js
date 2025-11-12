@@ -10,19 +10,19 @@ import {
 
 const router = express.Router();
 
-// Categories - kept path the same as frontend expects
+// categories - kept path the same as frontend expects
 router.get("/products/categories", getCategoriesPage);
 router.get("/categories", getCategoriesPage); // alternative path
 
-// Products by category
+// products by category
 router.get("/products/category/:id", getProductsByCategory);
 
-// All products (frontend uses /api/products?page=..)
+// all products (frontend uses /api/products?page=..)
 router.get("/products", getAllProductsPage);
 router.get("/products/all", getAllProductsPage);
 
-// Search endpoints
-router.get("/products/search", searchProductsByName); // Fallback to MySQL search
-router.get("/products/search/fulltext", searchProductsFullText); // Elasticsearch full-text search
+// search endpoints
+router.get("/products/search", searchProductsByName); // fallback
+router.get("/products/search/fulltext", searchProductsFullText);
 
 export default router;
